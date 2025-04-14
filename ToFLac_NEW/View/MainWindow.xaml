@@ -1,0 +1,184 @@
+﻿<Window x:Class="ToFLac_NEW.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ToFLac_NEW"
+        mc:Ignorable="d"
+        Title="ToFLaC"
+        Icon="../Resources/Images/logo.png"
+        Height="450" Width="800"
+        MinHeight="450" MinWidth="800"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <ResourceDictionary Source="../Resources/Styles/MainStyle.xaml"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.05*"/>
+            <RowDefinition Height="0.07*"/>
+            <RowDefinition Height="0.4*"/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="Файл" Padding="5 2 5 0">
+                <MenuItem Header="Создать" Click="ButtonCreate_OnClick"/>
+                <MenuItem Header="Открыть" Click="ButtonOpen_OnClick"/>
+                <MenuItem Header="Сохранить" Click="ButtonSave_OnClick"/>
+                <MenuItem Header="Сохранить как" Click="ButtonSaveAs_OnClick"/>
+                <MenuItem Header="Выход" Click="ButtonExit_OnClick"/>
+            </MenuItem>
+            <MenuItem Header="Правка" Padding="5 2 5 0">
+                <MenuItem Header="Отменить" Click="ButtonUndo_OnClick"/>
+                <MenuItem Header="Повторить" Click="ButtonRedo_OnClick"/>
+                <MenuItem Header="Вырезать" Click="ButtonCut_OnClick"/>
+                <MenuItem Header="Копировать" Click="ButtonCopy_OnClick"/>
+                <MenuItem Header="Вставить" Click="ButtonPaste_OnClick"/>
+                <MenuItem Header="Удалить" Click="ButtonDelete_OnClick"/>
+                <MenuItem Header="Выделить всё" Click="ButtonSelectAll_OnClick"/>
+            </MenuItem>
+            <MenuItem Header="Текст" Padding="5 2 5 0">
+                <MenuItem Header="Постановка задачи"/>
+                <MenuItem Header="Грамматика"/>
+                <MenuItem Header="Классификация грамматики"/>
+                <MenuItem Header="Метод анализа"/>
+                <MenuItem Header="Диагностика и нейтрализация ошибок"/>
+                <MenuItem Header="Тестовый пример"/>
+                <MenuItem Header="Список литературы"/>
+                <MenuItem Header="Исходный код программы"/>
+            </MenuItem>
+            <Button Width="15" Height="15" Margin="2 0 2 0" Background="Transparent" BorderThickness="0" Style="{StaticResource NoBorderButton}">
+                <Image Source="../Resources/Images/playButton.png"/>
+            </Button>
+            <MenuItem Header="Справка" Padding="5 2 5 0">
+                <MenuItem Header="Вызов справки" Click="ButtonHelp_OnClick"/>
+                <MenuItem Header="О программе" Click="ButtonAboutProgram_OnClick"/>
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1" Margin="20 0 20 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Click="ButtonCreate_OnClick" Style="{StaticResource RoundedButton}">
+                    <Image Source="../Resources/Images/fileCreate.png"/>
+                </Button>
+                <Button Grid.Column="1" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Click="ButtonOpen_OnClick" Style="{StaticResource RoundedButton}">
+                    <Image Source="../Resources/Images/folderOpen.png"/>
+                </Button>
+                <Button Grid.Column="2" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Click="ButtonSave_OnClick" Style="{StaticResource RoundedButton}">
+                    <Image Source="../Resources/Images/saveFile.png"/>
+                </Button>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Click="ButtonUndo_OnClick" Style="{StaticResource RoundedButton}">
+                    <Image Source="../Resources/Images/backArrow.png"/>
+                </Button>
+                <Button Grid.Column="1" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Click="ButtonRedo_OnClick" Style="{StaticResource RoundedButton}">
+                    <Image Source="../Resources/Images/forwardArrow.png"/>
+                </Button>
+            </Grid>
+            <Grid Grid.Column="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Click="ButtonCopy_OnClick" Style="{StaticResource RoundedButton}">
+                    <Image Source="../Resources/Images/copy.png"/>
+                </Button>
+                <Button Grid.Column="1" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Click="ButtonCut_OnClick" Style="{StaticResource RoundedButton}">
+                    <Image Source="../Resources/Images/cut-out.png"/>
+                </Button>
+                <Button Grid.Column="2" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Click="ButtonPaste_OnClick" Style="{StaticResource RoundedButton}">
+                    <Image Source="../Resources/Images/paste.png"/>
+                </Button>
+                <Button Grid.Column="3" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Command="{Binding StartCommand}" Style="{StaticResource RoundedButton}">
+                    <Image Source="../Resources/Images/playButton.png"/>
+                </Button>
+                <Button Grid.Column="4" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Click="ButtonHelp_OnClick" Style="{StaticResource RoundedButton}">
+                    <Image Source="../Resources/Images/about.png"/>
+                </Button>
+                <Button Grid.Column="5" Width="24" Height="24" Margin="2 0 2 0" Background="Transparent" Command="{Binding ClearCommand}" Style="{StaticResource RoundedButton}">
+                    CLR
+                </Button>
+            </Grid>
+        </Grid>
+        <Border Grid.Row="2" Margin="20 0 20 10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Hidden" x:Name="textBlockScrollViewer" ScrollChanged="TextBlockScrollViewer_ScrollChanged" >
+                    <TextBlock Text="{Binding IndexesNumbers, UpdateSourceTrigger=PropertyChanged}" Background="#eaeaea" Padding="5px 0px 0px 0px" />
+                </ScrollViewer>
+                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="textBoxScrollViewer" ScrollChanged="TextBoxScrollViewer_ScrollChanged">
+                    <TextBox 
+                        x:Name="codeBox"
+                        AcceptsReturn="True"
+                        Text="{Binding Code,
+                        UpdateSourceTrigger=PropertyChanged}"
+                    />
+                </ScrollViewer>
+            </Grid>
+        </Border>
+        <Border Grid.Row="3" Margin="20 0 20 20" BorderBrush="Gray" BorderThickness="0.75">
+            <TabControl>
+                <TabItem Header="Парсер">
+                    <ScrollViewer>
+                        <DataGrid
+                            Name="DataGridErrors"
+                            ItemsSource="{Binding Errors}"
+                            AutoGenerateColumns="False"
+                            HeadersVisibility="Column"
+                            >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Код" Binding="{Binding Path=Code}" Width="50"/>
+                                <DataGridTextColumn Header="Cтрока" Binding="{Binding Path=Index}" Width="50"/>
+                                <DataGridTextColumn Header="Начало" Binding="{Binding Path=Start}" Width="50"/>
+                                <DataGridTextColumn Header="Конец" Binding="{Binding Path=End}" Width="50"/>
+                                <DataGridTextColumn Header="Сообщение" Binding="{Binding Path=Message}" Width="250"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Анализатор">
+                    <ScrollViewer>
+                        <DataGrid
+                            Name="DataGridAnalyzer"
+                            ItemsSource="{Binding Analyzers}"
+                            AutoGenerateColumns="False"
+                            HeadersVisibility="Column"
+                        >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Строка" Binding="{Binding Path=Index}" Width="50"/>
+                                <DataGridTextColumn Header="Начало" Binding="{Binding Path=Start}" Width="50"/>
+                                <DataGridTextColumn Header="Конец" Binding="{Binding Path=End}" Width="50"/>
+                                <DataGridTextColumn Header="Терминал" Binding="{Binding Path=CurrentToken}" Width="250"/>
+                                <DataGridTextColumn Header="Нетерминал" Binding="{Binding Path=Token}" Width="250"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+        </Border>
+    </Grid>
+</Window>
