@@ -15,8 +15,8 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.05*"/>
-            <RowDefinition Height="0.07*"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="36"/>
             <RowDefinition Height="0.4*"/>
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
@@ -164,16 +164,17 @@
                     <ScrollViewer>
                         <DataGrid
                             Name="DataGridAnalyzer"
-                            ItemsSource="{Binding Analyzers}"
+                            ItemsSource="{Binding LexemesTokens}"
                             AutoGenerateColumns="False"
                             HeadersVisibility="Column"
                         >
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Строка" Binding="{Binding Path=Index}" Width="50"/>
-                                <DataGridTextColumn Header="Начало" Binding="{Binding Path=Start}" Width="50"/>
-                                <DataGridTextColumn Header="Конец" Binding="{Binding Path=End}" Width="50"/>
-                                <DataGridTextColumn Header="Терминал" Binding="{Binding Path=CurrentToken}" Width="250"/>
-                                <DataGridTextColumn Header="Нетерминал" Binding="{Binding Path=Token}" Width="250"/>
+                                <DataGridTextColumn Header="Строка" Binding="{Binding Path=Line}" Width="50"/>
+                                <DataGridTextColumn Header="Начало" Binding="{Binding Path=StartIdx}" Width="50"/>
+                                <DataGridTextColumn Header="Конец" Binding="{Binding Path=EndIdx}" Width="50"/>
+                                <DataGridTextColumn Header="Терминал" Binding="{Binding Path=Terminal}" Width="150"/>
+                                <DataGridTextColumn Header="Нетерминал" Binding="{Binding Path=NonTerminal}" Width="150"/>
+                                <DataGridTextColumn Header="Сообщение" Binding="{Binding Path=Message}" Width="250"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </ScrollViewer>
