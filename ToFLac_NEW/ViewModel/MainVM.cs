@@ -1,5 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using ToFLac_NEW.Model;
+using ToFLac_NEW.Model.Lexer;
+using ToFLac_NEW.Model.Parser;
 using ToFLac_NEW.ViewModel.Commands;
 
 namespace ToFLac_NEW.ViewModel
@@ -10,11 +13,21 @@ namespace ToFLac_NEW.ViewModel
         private string _outputText = string.Empty;
         private string _indexesNumbers = "1\n";
         private int _numbersCount = 1;
-        private ObservableCollection<Error> _errors = new();
-        private ObservableCollection<AnalyzerObject> _analyzers = new();
+        private Lexer _lexer = new();
+        private ObservableCollection<Token> _lexemesTokens = new();
+        private ObservableCollection<ErrorToken> _errors = new();
 
-        public ObservableCollection<Error> Errors { get => _errors; set => _errors = value; }
-        public ObservableCollection<AnalyzerObject> Analyzers { get => _analyzers; set => _analyzers = value; }
+        public ObservableCollection<Token> LexemesTokens
+        {
+            get => _lexemesTokens;
+            set => Set(ref _lexemesTokens, value);
+        }
+
+        public ObservableCollection<ErrorToken> Errors
+        {
+            get => _errors;
+            set => Set(ref _errors, value);
+        }
 
         public string Code
         {
@@ -63,11 +76,20 @@ namespace ToFLac_NEW.ViewModel
         }
 
         public Command ClearCommand => Command.Create(Clear);
+        public Command StartCommand => Command.Create(Start);
 
         public void Clear()
         {
             Code = string.Empty;
             OutputText = string.Empty;
+        }
+
+        public void Start()
+        {
+            string text = Code.Replace("\t", "").Replace("\r", "");
+            text = Regex.Replace(text, @" {1,}", " ");
+            List<Token> tokens = _lexer.GetLexemes(text);
+            LexemesTokens = new ObservableCollection<Token>(_lexer.GetLexemes(text));
         }
     }
 }
