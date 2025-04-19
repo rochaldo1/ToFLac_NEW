@@ -16,7 +16,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="24"/>
-            <RowDefinition Height="36"/>
+            <RowDefinition Height="36 "/>
             <RowDefinition Height="0.4*"/>
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
@@ -149,7 +149,11 @@
                             ItemsSource="{Binding Errors}"
                             AutoGenerateColumns="False"
                             HeadersVisibility="Column"
-                            >
+                            CanUserDeleteRows="False"
+                            CanUserAddRows="False"
+                            CanUserReorderColumns="False"
+                            IsReadOnly="True"
+                        >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Код" Binding="{Binding Path=Code}" Width="50"/>
                                 <DataGridTextColumn Header="Cтрока" Binding="{Binding Path=Index}" Width="50"/>
@@ -167,6 +171,10 @@
                             ItemsSource="{Binding LexemesTokens}"
                             AutoGenerateColumns="False"
                             HeadersVisibility="Column"
+                            CanUserDeleteRows="False"
+                            CanUserAddRows="False"
+                            CanUserReorderColumns="False"
+                            IsReadOnly="True"
                         >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Строка" Binding="{Binding Path=Line}" Width="50"/>
