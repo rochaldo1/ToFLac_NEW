@@ -31,7 +31,14 @@ namespace ToFLac_NEW.Model.Parser.States
         public Token? GetCurrentToken() 
             => (_currentTokenIndex < _tokens.Count) ? _tokens[_currentTokenIndex] : null;
 
-        public void AddError(string message, int line, int index)
-            => Errors.Add(new ErrorToken(message, line, index));
+        public void AddError(int line, int index, string message)
+            => Errors.Add(new ErrorToken(line, index, message));
+
+        public Token? PeekNextToken()
+        => (_currentTokenIndex + 1 < _tokens.Count) ? _tokens[_currentTokenIndex + 1] : null;
+
+        public void MoveNext() => _currentTokenIndex++;
+
+        public int GetCurrentPosition() => _currentTokenIndex;
     }
 }

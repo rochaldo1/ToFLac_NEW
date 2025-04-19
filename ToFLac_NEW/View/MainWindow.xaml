@@ -162,7 +162,7 @@
                         </DataGrid>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="Анализатор">
+                <TabItem Header="Лексер">
                     <ScrollViewer>
                         <DataGrid
                             Name="DataGridAnalyzer"
