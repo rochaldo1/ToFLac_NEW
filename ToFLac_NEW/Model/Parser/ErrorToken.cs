@@ -2,17 +2,15 @@
 {
     public class ErrorToken
     {
-        public string ErrorMessage { get; set; }
+        public string Message { get; set; }
         public int Line { get; set; }
         public int Index { get; set; }
-        public ErrorTokenType ErrorType { get; set; }
 
-        public ErrorToken(string message, int line, int index, ErrorTokenType errorType)
+        public ErrorToken(string message, int line, int index)
         {
-            ErrorMessage = message;
+            Message = message;
             Line = line;
             Index = index;
-            ErrorType = errorType;
         }
     }
 }

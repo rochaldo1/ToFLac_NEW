@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using ToFLac_NEW.Model;
 using ToFLac_NEW.Model.Lexer;
 using ToFLac_NEW.Model.Parser;
+using ToFLac_NEW.Model.Parser.States;
 using ToFLac_NEW.ViewModel.Commands;
 
 namespace ToFLac_NEW.ViewModel
@@ -14,6 +15,7 @@ namespace ToFLac_NEW.ViewModel
         private string _indexesNumbers = "1\n";
         private int _numbersCount = 1;
         private Lexer _lexer = new();
+        private StateMachine _parser = new();
         private ObservableCollection<Token> _lexemesTokens = new();
         private ObservableCollection<ErrorToken> _errors = new();
 
@@ -88,8 +90,12 @@ namespace ToFLac_NEW.ViewModel
         {
             string text = Code.Replace("\t", "").Replace("\r", "");
             text = Regex.Replace(text, @" {1,}", " ");
+
             List<Token> tokens = _lexer.GetLexemes(text);
             LexemesTokens = new ObservableCollection<Token>(_lexer.GetLexemes(text));
+
+            _parser.ParseAll(tokens);
+            Errors = new ObservableCollection<ErrorToken>(_parser.Errors);
         }
     }
 }

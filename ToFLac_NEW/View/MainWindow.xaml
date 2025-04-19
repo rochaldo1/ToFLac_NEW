@@ -155,10 +155,8 @@
                             IsReadOnly="True"
                         >
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Код" Binding="{Binding Path=Code}" Width="50"/>
-                                <DataGridTextColumn Header="Cтрока" Binding="{Binding Path=Index}" Width="50"/>
-                                <DataGridTextColumn Header="Начало" Binding="{Binding Path=Start}" Width="50"/>
-                                <DataGridTextColumn Header="Конец" Binding="{Binding Path=End}" Width="50"/>
+                                <DataGridTextColumn Header="Cтрока" Binding="{Binding Path=Line}" Width="50"/>
+                                <DataGridTextColumn Header="Индекс" Binding="{Binding Path=Index}" Width="50"/>
                                 <DataGridTextColumn Header="Сообщение" Binding="{Binding Path=Message}" Width="250"/>
                             </DataGrid.Columns>
                         </DataGrid>
