@@ -14,6 +14,8 @@
         LeftBracket = 10,
         RightBracket = 11,
         Semicolon = 12,
-        Invalid = 13
+        Invalid = 13,
+        BrokenType = 14,
+        BrokenNew = 15,
     }
 }
