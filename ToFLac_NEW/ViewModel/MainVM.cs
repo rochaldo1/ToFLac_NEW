@@ -1,9 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
-using ToFLac_NEW.Model;
 using ToFLac_NEW.Model.Lexer;
 using ToFLac_NEW.Model.Parser;
-using ToFLac_NEW.Model.Parser.States;
 using ToFLac_NEW.ViewModel.Commands;
 
 namespace ToFLac_NEW.ViewModel
@@ -11,11 +9,10 @@ namespace ToFLac_NEW.ViewModel
     public class MainVM : BaseVM
     {
         private string _code = string.Empty;
-        private string _outputText = string.Empty;
         private string _indexesNumbers = "1\n";
         private int _numbersCount = 1;
         private Lexer _lexer = new();
-        private StateMachine _parser = new();
+        private Parser _parser = new();
         private ObservableCollection<Token> _lexemesTokens = new();
         private ObservableCollection<ErrorToken> _errors = new();
 
@@ -39,12 +36,6 @@ namespace ToFLac_NEW.ViewModel
                 Set(ref _code, value);
                 UpdateIndexesNumbers(value);
             }
-        }
-
-        public string OutputText
-        {
-            get => _outputText;
-            set => Set(ref _outputText, value);
         }
 
         public string IndexesNumbers
@@ -83,7 +74,7 @@ namespace ToFLac_NEW.ViewModel
         public void Clear()
         {
             Code = string.Empty;
-            OutputText = string.Empty;
+            Errors.Clear();
         }
 
         public void Start()
@@ -94,8 +85,7 @@ namespace ToFLac_NEW.ViewModel
             List<Token> tokens = _lexer.GetLexemes(text);
             LexemesTokens = new ObservableCollection<Token>(_lexer.GetLexemes(text));
 
-            _parser.ParseAll(tokens);
-            Errors = new ObservableCollection<ErrorToken>(_parser.Errors);
+            Errors = new ObservableCollection<ErrorToken>(_parser.StartParse(tokens));
         }
     }
 }

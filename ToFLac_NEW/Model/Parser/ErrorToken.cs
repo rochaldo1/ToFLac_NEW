@@ -5,12 +5,14 @@
         public int Line { get; set; }
         public int Index { get; set; }
         public string Message { get; set; }
+        public ErrorType ErrorType { get; set; }
 
-        public ErrorToken(int line, int index, string message)
+        public ErrorToken(int line, int index, string message, ErrorType errorType)
         {
             Line = line;
             Index = index;
             Message = message;
+            ErrorType = errorType;
         }
     }
 }
