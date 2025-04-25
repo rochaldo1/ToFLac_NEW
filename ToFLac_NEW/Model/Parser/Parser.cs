@@ -60,17 +60,39 @@ namespace ToFLac_NEW.Model.Parser
 
             var currentType = _tokens[currentPosition].TypeCode;
 
-            if (currentType == TokenType.IntPointer ||
-                currentType == TokenType.FloatPointer ||
-                currentType == TokenType.DoublePointer ||
-                currentType == TokenType.CharPointer)
-                return ParseIdentifier(currentPosition + 1, errors);
+            if (currentType == TokenType.Int ||
+                currentType == TokenType.Float ||
+                currentType == TokenType.Double ||
+                currentType == TokenType.Char)
+                return ParsePointer(currentPosition + 1, errors);
 
             return GetMinErrors(
-                ParseIdentifier(currentPosition, CreateErrorListWithTypePtr(currentPosition, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
-                ParseIdentifier(currentPosition + 1, CreateErrorListWithTypePtr(currentPosition, ErrorType.REPLACE, errors, _tokens[currentPosition].Line)),
-                ParseStart(currentPosition + 1, CreateErrorListWithTypePtr(currentPosition, ErrorType.DELETE, errors, _tokens[currentPosition].Line))
+                ParsePointer(currentPosition, CreateErrorListWithType(currentPosition, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
+                ParsePointer(currentPosition + 1, CreateErrorListWithType(currentPosition, ErrorType.REPLACE, errors, _tokens[currentPosition].Line)),
+                ParseStart(currentPosition + 1, CreateErrorListWithType(currentPosition, ErrorType.DELETE, errors, _tokens[currentPosition].Line))
             );
+        }
+
+        private List<ErrorToken> ParsePointer(int currentPosition, List<ErrorToken> errors)
+        {
+            if (currentPosition >= _tokens.Count)
+                return errors;
+
+            currentPosition = SkipInvalidTokens(currentPosition, errors);
+
+            if (_tokens[currentPosition].TypeCode == TokenType.Space)
+                return ParsePointer(currentPosition + 1, errors);
+            
+            if (_tokens[currentPosition].TypeCode != TokenType.Pointer)
+            {
+                return GetMinErrors(
+                    ParseIdentifier(currentPosition, CreateErrorList(currentPosition, TokenType.Pointer, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
+                    ParseIdentifier(currentPosition + 1, CreateErrorList(currentPosition, TokenType.Pointer, ErrorType.REPLACE, errors, _tokens[currentPosition].Line)),
+                    ParsePointer(currentPosition + 1, CreateErrorList(currentPosition, TokenType.Pointer, ErrorType.DELETE, errors, _tokens[currentPosition].Line))
+                );
+            }
+
+            return ParseIdentifier(currentPosition + 1, errors);
         }
 
         private List<ErrorToken> ParseIdentifier(int currentPosition, List<ErrorToken> errors)
@@ -338,20 +360,6 @@ namespace ToFLac_NEW.Model.Parser
             return newErrors;
         }
 
-        private List<ErrorToken> CreateErrorListWithTypePtr(int currentPosition, ErrorType errorType, List<ErrorToken> currentErrors, int currentLine)
-        {
-            var newErrors = new List<ErrorToken>(currentErrors);
-
-            newErrors.Add(new ErrorToken(
-                currentLine,
-                currentPosition,
-                CreateTypePtrErrorMessage(errorType, currentPosition),
-                errorType
-            ));
-
-            return newErrors;
-        }
-
         private string CreateErrorMessage(TokenType type, ErrorType errorType, int currentPosition)
         {
             string lexeme = type == TokenType.Identifier
@@ -373,16 +381,6 @@ namespace ToFLac_NEW.Model.Parser
             {
                 ErrorType.PUSH => "Вставить лексему: 'int', 'float', 'double' или 'char'",
                 ErrorType.REPLACE => $"Заменить лексему '{_tokens[currentPosition].Terminal}' на лексему 'int', 'float', 'double' или 'char'",
-                ErrorType.DELETE => $"Удалить недопустимый символ '{_tokens[currentPosition].Terminal}'",
-                _ => string.Empty
-            };
-        }
-        private string CreateTypePtrErrorMessage(ErrorType errorType, int currentPosition)
-        {
-            return errorType switch
-            {
-                ErrorType.PUSH => "Вставить лексему: 'int*', 'float*', 'double*' или 'char*'",
-                ErrorType.REPLACE => $"Заменить лексему '{_tokens[currentPosition].Terminal}' на лексему 'int*', 'float*', 'double*' или 'char*'",
                 ErrorType.DELETE => $"Удалить недопустимый символ '{_tokens[currentPosition].Terminal}'",
                 _ => string.Empty
             };

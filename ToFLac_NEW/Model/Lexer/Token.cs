@@ -6,15 +6,12 @@ namespace ToFLac_NEW.Model.Lexer
     {
         public static Dictionary<string, (string token, TokenType tokenType)> tokens = new()
         {
-            { @"^\bint\*$", ("INT_POINTER", TokenType.IntPointer) },
-            { @"^\bfloat\*$", ("FLOAT_POINTER", TokenType.FloatPointer) },
-            { @"^\bdouble\*$", ("DOUBLE_POINTER", TokenType.DoublePointer) },
-            { @"^\bchar\*$", ("CHAR_POINTER", TokenType.CharPointer) },
-            { @"^\bint\b$", ("INT", TokenType.Int) },
-            { @"^\bfloat\b$", ("FLOAT", TokenType.Float) },
-            { @"^\bdouble\b$", ("DOUBLE", TokenType.Double) },
-            { @"^\bchar\b$", ("CHAR", TokenType.Char) },
-            { @"^\bnew\b$", ("NEW", TokenType.New) },
+            { @"int", ("INT", TokenType.Int) },
+            { @"float", ("FLOAT", TokenType.Float) },
+            { @"double", ("DOUBLE", TokenType.Double) },
+            { @"char", ("CHAR", TokenType.Char) },
+            { @"new", ("NEW", TokenType.New) },
+            { @"\*", ("POINTER", TokenType.Pointer) },
             { @"^ $", ("SPACE", TokenType.Space) },
             { @"^[a-zA-Z][a-zA-Z0-9]*$", ("IDENTIFIER", TokenType.Identifier) },
             { @"^=$", ("EQUAL", TokenType.Equal) },

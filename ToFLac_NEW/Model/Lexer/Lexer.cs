@@ -5,9 +5,13 @@ namespace ToFLac_NEW.Model.Lexer
     public class Lexer
     {
         private const string pattern =
-            @"\bint\*|\bfloat\*|\bdouble\*|\bchar\*|" +
-            @"\bint\b|\bfloat\b|\bdouble\b|\bchar\b|" +
-            @"\bnew\b| |=|\(|\)|;|[a-zA-Z][a-zA-Z0-9]*| |[^\s]";
+            @"(int|float|double|char)|" +
+            @"\*|"                      +
+            @"new|"                     +
+            @"=|\(|\)|;|"               +
+            @"[a-zA-Z][a-zA-Z0-9]*|"    +
+            @"\s+|"                     +
+            @"[^\s]";
 
         public List<Token> GetLexemes(string text)
         {
@@ -41,42 +45,6 @@ namespace ToFLac_NEW.Model.Lexer
 
                     switch (value)
                     {
-                        case "int*":
-                            tokens.Add(new Token(
-                                lineNum + 1,
-                                start,
-                                pos,
-                                $"Тип указатель: '{value}'",
-                                value
-                            ));
-                            continue;
-                        case "float*":
-                            tokens.Add(new Token(
-                                lineNum + 1,
-                                start,
-                                pos,
-                                $"Тип указатель: '{value}'",
-                                value
-                            ));
-                            continue;
-                        case "double*":
-                            tokens.Add(new Token(
-                                lineNum + 1,
-                                start,
-                                pos,
-                                $"Тип указатель: '{value}'",
-                                value
-                            ));
-                            continue;
-                        case "char*":
-                            tokens.Add(new Token(
-                                lineNum + 1,
-                                start,
-                                pos,
-                                $"Тип указатель: '{value}'",
-                                value
-                            ));
-                            continue;
                         case "int":
                         case "float":
                         case "double":
@@ -88,7 +56,18 @@ namespace ToFLac_NEW.Model.Lexer
                                 $"Тип: '{value}'",
                                 value
                             ));
-                            continue;
+                            break;
+
+                        case "*":
+                            tokens.Add(new Token(
+                                lineNum + 1,
+                                start,
+                                pos,
+                                $"Указатель: '{value}'",
+                                value
+                            ));
+                            break;
+
                         case "new":
                             tokens.Add(new Token(
                                 lineNum + 1,
@@ -97,11 +76,8 @@ namespace ToFLac_NEW.Model.Lexer
                                 $"Ключевое слово: '{value}'",
                                 value
                             ));
-                            continue;
-                    }
+                            break;
 
-                    switch (value)
-                    {
                         case "=":
                             tokens.Add(new Token(
                                 lineNum + 1,

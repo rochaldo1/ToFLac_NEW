@@ -4,7 +4,8 @@
     {
         public static Dictionary<string, TokenType> Lexemes = new Dictionary<string, TokenType>
         {
-            { "new", TokenType.New},
+            { "*", TokenType.Pointer },
+            { "new", TokenType.New },
             { "=", TokenType.Equal },
             { " ", TokenType.Space },
             { ";", TokenType.Semicolon },
