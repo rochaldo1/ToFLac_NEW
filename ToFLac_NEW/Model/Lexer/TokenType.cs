@@ -2,20 +2,21 @@
 {
     public enum TokenType
     {
-        Int = 1,
-        Float = 2,
-        Double = 3,
-        Char = 4,
-        Pointer = 5,
-        Space = 6,
-        Identifier = 7,
-        Equal = 8,
-        New = 9,
-        LeftBracket = 10,
-        RightBracket = 11,
-        Semicolon = 12,
-        Invalid = 13,
-        BrokenType = 14,
-        BrokenNew = 15,
+        IntPointer = 1,
+        FloatPointer = 2,
+        DoublePointer = 3,
+        CharPointer = 4,
+        Int = 5,
+        Float = 6,
+        Double = 7,
+        Char = 8,
+        Space = 9,
+        Identifier = 10,
+        Equal = 11,
+        New = 12,
+        LeftBracket = 13,
+        RightBracket = 14,
+        Semicolon = 15,
+        Invalid = 16
     }
 }

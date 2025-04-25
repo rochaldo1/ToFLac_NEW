@@ -6,23 +6,20 @@ namespace ToFLac_NEW.Model.Lexer
     {
         public static Dictionary<string, (string token, TokenType tokenType)> tokens = new()
         {
+            { @"^\bint\*$", ("INT_POINTER", TokenType.IntPointer) },
+            { @"^\bfloat\*$", ("FLOAT_POINTER", TokenType.FloatPointer) },
+            { @"^\bdouble\*$", ("DOUBLE_POINTER", TokenType.DoublePointer) },
+            { @"^\bchar\*$", ("CHAR_POINTER", TokenType.CharPointer) },
             { @"^\bint\b$", ("INT", TokenType.Int) },
             { @"^\bfloat\b$", ("FLOAT", TokenType.Float) },
             { @"^\bdouble\b$", ("DOUBLE", TokenType.Double) },
             { @"^\bchar\b$", ("CHAR", TokenType.Char) },
-            { @"^i[^a-zA-Z0-9\s]*n[^a-zA-Z0-9\s]*t$", ("BROKEN_INT", TokenType.BrokenType) },
-            { @"^f[^a-zA-Z0-9\s]*l[^a-zA-Z0-9\s]*o[^a-zA-Z0-9\s]*a[^a-zA-Z0-9\s]*t$", ("BROKEN_FLOAT", TokenType.BrokenType) },
-            { @"^d[^a-zA-Z0-9\s]*o[^a-zA-Z0-9\s]*u[^a-zA-Z0-9\s]*b[^a-zA-Z0-9\s]*l[^a-zA-Z0-9\s]*e$", ("BROKEN_DOUBLE", TokenType.BrokenType) },
-            { @"^c[^a-zA-Z0-9\s]*h[^a-zA-Z0-9\s]*a[^a-zA-Z0-9\s]*r$", ("BROKEN_CHAR", TokenType.BrokenType) },
-            { @"^n[^a-zA-Z0-9\s]+e[^a-zA-Z0-9\s]*w$", ("BROKEN_NEW", TokenType.BrokenNew) },
-            { @"^n[^a-zA-Z0-9\s]*e[^a-zA-Z0-9\s]+w$", ("BROKEN_NEW", TokenType.BrokenNew) },
             { @"^\bnew\b$", ("NEW", TokenType.New) },
-            { @"^\*$", ("POINTER", TokenType.Pointer) },
             { @"^ $", ("SPACE", TokenType.Space) },
             { @"^[a-zA-Z][a-zA-Z0-9]*$", ("IDENTIFIER", TokenType.Identifier) },
             { @"^=$", ("EQUAL", TokenType.Equal) },
-            { @"^\($", ("LEFTBRACKET", TokenType.LeftBracket) },
-            { @"^\)$", ("RIGHTBRACKET", TokenType.RightBracket) },
+            { @"^\($", ("LEFT_BRACKET", TokenType.LeftBracket) },
+            { @"^\)$", ("RIGHT_BRACKET", TokenType.RightBracket) },
             { @"^;$", ("SEMICOLON", TokenType.Semicolon) },
             { @"^[^\s]$", ("INVALID", TokenType.Invalid) }
         };

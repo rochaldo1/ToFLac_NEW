@@ -5,12 +5,9 @@ namespace ToFLac_NEW.Model.Lexer
     public class Lexer
     {
         private const string pattern =
-            @"(i[^a-zA-Z0-9\s]*n[^a-zA-Z0-9\s]*t)|" +
-            @"(f[^a-zA-Z0-9\s]*l[^a-zA-Z0-9\s]*o[^a-zA-Z0-9\s]*a[^a-zA-Z0-9\s]*t)|" +
-            @"(d[^a-zA-Z0-9\s]*o[^a-zA-Z0-9\s]*u[^a-zA-Z0-9\s]*b[^a-zA-Z0-9\s]*l[^a-zA-Z0-9\s]*e)|" +
-            @"(c[^a-zA-Z0-9\s]*h[^a-zA-Z0-9\s]*a[^a-zA-Z0-9\s]*r)|" +
-            @"(n[^a-zA-Z0-9\s]+e[^a-zA-Z0-9\s]*w|n[^a-zA-Z0-9\s]*e[^a-zA-Z0-9\s]+w)|" +
-            @"\bint\b|\bfloat\b|\bdouble\b|\bchar\b|\bnew\b|\*| |=|\(|\)|;|[a-zA-Z][a-zA-Z0-9]*| |[^\s]";
+            @"\bint\*|\bfloat\*|\bdouble\*|\bchar\*|" +
+            @"\bint\b|\bfloat\b|\bdouble\b|\bchar\b|" +
+            @"\bnew\b| |=|\(|\)|;|[a-zA-Z][a-zA-Z0-9]*| |[^\s]";
 
         public List<Token> GetLexemes(string text)
         {
@@ -44,16 +41,42 @@ namespace ToFLac_NEW.Model.Lexer
 
                     switch (value)
                     {
-                        case "new":
+                        case "int*":
                             tokens.Add(new Token(
                                 lineNum + 1,
                                 start,
                                 pos,
-                                $"Ключевое слово: '{value}'",
+                                $"Тип указатель: '{value}'",
                                 value
                             ));
                             continue;
-
+                        case "float*":
+                            tokens.Add(new Token(
+                                lineNum + 1,
+                                start,
+                                pos,
+                                $"Тип указатель: '{value}'",
+                                value
+                            ));
+                            continue;
+                        case "double*":
+                            tokens.Add(new Token(
+                                lineNum + 1,
+                                start,
+                                pos,
+                                $"Тип указатель: '{value}'",
+                                value
+                            ));
+                            continue;
+                        case "char*":
+                            tokens.Add(new Token(
+                                lineNum + 1,
+                                start,
+                                pos,
+                                $"Тип указатель: '{value}'",
+                                value
+                            ));
+                            continue;
                         case "int":
                         case "float":
                         case "double":
@@ -66,44 +89,19 @@ namespace ToFLac_NEW.Model.Lexer
                                 value
                             ));
                             continue;
-                    }
-
-                    bool isBrokenType = Regex.IsMatch(value, @"^(i[^a-zA-Z0-9\s]*n[^a-zA-Z0-9\s]*t)$") ||
-                                        Regex.IsMatch(value, @"^(f[^a-zA-Z0-9\s]*l[^a-zA-Z0-9\s]*o[^a-zA-Z0-9\s]*a[^a-zA-Z0-9\s]*t)$") ||
-                                        Regex.IsMatch(value, @"^(d[^a-zA-Z0-9\s]*o[^a-zA-Z0-9\s]*u[^a-zA-Z0-9\s]*b[^a-zA-Z0-9\s]*l[^a-zA-Z0-9\s]*e)$") ||
-                                        Regex.IsMatch(value, @"^(c[^a-zA-Z0-9\s]*h[^a-zA-Z0-9\s]*a[^a-zA-Z0-9\s]*r)$");
-
-                    bool isBrokenNew = Regex.IsMatch(value, @"^(n[^a-zA-Z0-9\s]+e[^a-zA-Z0-9\s]*w|n[^a-zA-Z0-9\s]*e[^a-zA-Z0-9\s]+w)$");
-
-                    if (isBrokenType || isBrokenNew)
-                    {
-                        string errorType = isBrokenNew ? "NEW" :
-                                         value.StartsWith("i") ? "INT" :
-                                         value.StartsWith("f") ? "FLOAT" :
-                                         value.StartsWith("d") ? "DOUBLE" : "CHAR";
-
-                        tokens.Add(new Token(
-                            lineNum + 1,
-                            start,
-                            pos,
-                            $"Некорректное ключевое слово {errorType}: '{value}'",
-                            value
-                        ));
-                        continue;
-                    }
-
-                    switch (value)
-                    {
-                        case "*":
+                        case "new":
                             tokens.Add(new Token(
                                 lineNum + 1,
                                 start,
                                 pos,
-                                $"Указатель: '{value}'",
+                                $"Ключевое слово: '{value}'",
                                 value
                             ));
-                            break;
+                            continue;
+                    }
 
+                    switch (value)
+                    {
                         case "=":
                             tokens.Add(new Token(
                                 lineNum + 1,
