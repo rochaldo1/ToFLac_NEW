@@ -39,14 +39,14 @@
                 <MenuItem Header="Выделить всё" Click="ButtonSelectAll_OnClick"/>
             </MenuItem>
             <MenuItem Header="Текст" Padding="5 2 5 0">
-                <MenuItem Header="Постановка задачи"/>
-                <MenuItem Header="Грамматика"/>
-                <MenuItem Header="Классификация грамматики"/>
-                <MenuItem Header="Метод анализа"/>
-                <MenuItem Header="Диагностика и нейтрализация ошибок"/>
-                <MenuItem Header="Тестовый пример"/>
-                <MenuItem Header="Список литературы"/>
-                <MenuItem Header="Исходный код программы"/>
+                <MenuItem Header="Постановка задачи" Click="Task_OnClick"/>
+                <MenuItem Header="Грамматика" Click="Grammar_OnClick"/>
+                <MenuItem Header="Классификация грамматики" Click="Homsk_OnClick"/>
+                <MenuItem Header="Метод анализа" Click="Analysis_OnClick"/>
+                <MenuItem Header="Диагностика и нейтрализация ошибок" Click="Diagnosis_OnClick"/>
+                <MenuItem Header="Тестовый пример" Click="Test_OnClick"/>
+                <MenuItem Header="Список литературы" Click="Literature_OnClick"/>
+                <MenuItem Header="Исходный код программы" Click="Code_OnClick"/>
             </MenuItem>
             <Button Width="15" Height="15" Margin="2 0 2 0" Background="Transparent" BorderThickness="0" Style="{StaticResource NoBorderButton}">
                 <Image Source="../Resources/Images/playButton.png"/>
