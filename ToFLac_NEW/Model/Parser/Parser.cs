@@ -193,7 +193,9 @@ namespace ToFLac_NEW.Model.Parser
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseLeftBracket(currentPosition + 1, errors);
 
-            if (_tokens[currentPosition].TypeCode == TokenType.LeftBracket && _tokens[currentPosition + 1].TypeCode == TokenType.Semicolon)
+            if (currentPosition + 1 < _tokens.Count &&
+                _tokens[currentPosition].TypeCode == TokenType.LeftBracket &&
+                _tokens[currentPosition + 1].TypeCode == TokenType.Semicolon)
             {
                 errors.Add(new ErrorToken(
                     _tokens[currentPosition].Line,
@@ -227,7 +229,18 @@ namespace ToFLac_NEW.Model.Parser
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseRightBracket(currentPosition + 1, errors);
 
-            if (_tokens[currentPosition].TypeCode != TokenType.RightBracket)
+            if (_tokens[currentPosition].TypeCode == TokenType.Semicolon)
+            {
+                errors.Add(new ErrorToken(
+                    _tokens[currentPosition].Line,
+                    currentPosition,
+                    "Вставить лексему: ')'",
+                    ErrorType.PUSH
+                ));
+                return ParseSemicolon(currentPosition, errors);
+            }
+
+                if (_tokens[currentPosition].TypeCode != TokenType.RightBracket)
             {
                 return GetMinErrors(
                     ParseSemicolon(currentPosition, CreateErrorList(currentPosition, TokenType.RightBracket, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
@@ -276,7 +289,7 @@ namespace ToFLac_NEW.Model.Parser
             {
                 errors.Add(new ErrorToken(
                     _tokens[currentPosition].Line,
-                    _tokens[currentPosition].StartIdx,
+                    currentPosition,
                     $"Удалить недопустимый символ: {_tokens[currentPosition].Terminal}",
                     ErrorType.DELETE
                 ));
