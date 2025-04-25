@@ -74,7 +74,8 @@ namespace ToFLac_NEW.ViewModel
         public void Clear()
         {
             Code = string.Empty;
-            Errors.Clear();
+            LexemesTokens = new ObservableCollection<Token>();
+            Errors = new ObservableCollection<ErrorToken>();
         }
 
         public void Start()
@@ -85,7 +86,7 @@ namespace ToFLac_NEW.ViewModel
             List<Token> tokens = _lexer.GetLexemes(text);
             LexemesTokens = new ObservableCollection<Token>(_lexer.GetLexemes(text));
 
-            Errors = new ObservableCollection<ErrorToken>(_parser.StartParse(tokens));
+            Errors = new ObservableCollection<ErrorToken>(_parser.Parse(tokens));
         }
     }
 }
