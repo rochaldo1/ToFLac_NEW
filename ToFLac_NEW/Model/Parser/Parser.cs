@@ -1,4 +1,5 @@
-﻿using ToFLac_NEW.Model.Lexer;
+﻿using System.Text.RegularExpressions;
+using ToFLac_NEW.Model.Lexer;
 
 namespace ToFLac_NEW.Model.Parser
 {
@@ -60,6 +61,15 @@ namespace ToFLac_NEW.Model.Parser
 
             var currentType = _tokens[currentPosition].TypeCode;
 
+            if (currentType == TokenType.BrokenInt ||
+                currentType == TokenType.BrokenFloat ||
+                currentType == TokenType.BrokenDouble ||
+                currentType == TokenType.BrokenChar)
+            {
+                AddBrokenErrors(currentPosition, errors);
+                return ParsePointer(currentPosition + 1, errors);
+            }
+
             if (currentType == TokenType.Int ||
                 currentType == TokenType.Float ||
                 currentType == TokenType.Double ||
@@ -105,6 +115,12 @@ namespace ToFLac_NEW.Model.Parser
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseIdentifier(currentPosition + 1, errors);
 
+            if (_tokens[currentPosition].TypeCode == TokenType.BrokenIdentifier)
+            {
+                AddBrokenErrors(currentPosition, errors);
+                return ParseEqual(currentPosition + 1, errors);
+            }
+
             if (_tokens[currentPosition].TypeCode != TokenType.Identifier)
             {
                 return GetMinErrors(
@@ -149,6 +165,12 @@ namespace ToFLac_NEW.Model.Parser
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseNew(currentPosition + 1, errors);
 
+            if (_tokens[currentPosition].TypeCode == TokenType.BrokenNew)
+            {
+                AddBrokenErrors(currentPosition, errors);
+                return ParseSpaceAfterNew(currentPosition + 1, errors);
+            }
+
             if (_tokens[currentPosition].TypeCode != TokenType.New)
             {
                 return GetMinErrors(
@@ -191,6 +213,15 @@ namespace ToFLac_NEW.Model.Parser
                 return ParseType(currentPosition + 1, errors);
 
             var currentType = _tokens[currentPosition].TypeCode;
+
+            if (currentType == TokenType.BrokenInt ||
+                currentType == TokenType.BrokenFloat ||
+                currentType == TokenType.BrokenDouble ||
+                currentType == TokenType.BrokenChar)
+            {
+                AddBrokenErrors(currentPosition, errors);
+                return ParseLeftBracket(currentPosition + 1, errors);
+            }
 
             if (currentType == TokenType.Int ||
                 currentType == TokenType.Float ||
@@ -380,10 +411,31 @@ namespace ToFLac_NEW.Model.Parser
             return errorType switch
             {
                 ErrorType.PUSH => "Вставить лексему: 'int', 'float', 'double' или 'char'",
-                ErrorType.REPLACE => $"Заменить лексему '{_tokens[currentPosition].Terminal}' на лексему 'int', 'float', 'double' или 'char'",
-                ErrorType.DELETE => $"Удалить недопустимый символ '{_tokens[currentPosition].Terminal}'",
+                ErrorType.REPLACE => $"Заменить лексему: '{_tokens[currentPosition].Terminal}' на лексему 'int', 'float', 'double' или 'char'",
+                ErrorType.DELETE => $"Удалить недопустимый символ: '{_tokens[currentPosition].Terminal}'",
                 _ => string.Empty
             };
+        }
+
+        public void AddBrokenErrors(int currentPosition, List<ErrorToken> errors)
+        {
+            string terminal = _tokens[currentPosition].Terminal;
+
+            string validCharsPattern = @"^[a-zA-Z0-9]$";
+
+            for (int i = 0; i < terminal.Length; i++)
+            {
+                string currentChar = terminal[i].ToString();
+                if (!Regex.IsMatch(currentChar, validCharsPattern))
+                {
+                    errors.Add(new ErrorToken(
+                        _tokens[currentPosition].Line,
+                        currentPosition,
+                        $"Удалить недопустимый символ '{currentChar}' в лексеме '{terminal}'",
+                        ErrorType.DELETE
+                    ));
+                }
+            }
         }
     }
 }
