@@ -96,8 +96,8 @@ namespace ToFLac_NEW.Model.Parser
             if (_tokens[currentPosition].TypeCode != TokenType.Pointer)
             {
                 return GetMinErrors(
-                    ParseIdentifier(currentPosition, CreateErrorList(currentPosition, TokenType.Pointer, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
                     ParseIdentifier(currentPosition + 1, CreateErrorList(currentPosition, TokenType.Pointer, ErrorType.REPLACE, errors, _tokens[currentPosition].Line)),
+                    ParseIdentifier(currentPosition, CreateErrorList(currentPosition, TokenType.Pointer, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
                     ParsePointer(currentPosition + 1, CreateErrorList(currentPosition, TokenType.Pointer, ErrorType.DELETE, errors, _tokens[currentPosition].Line))
                 );
             }
