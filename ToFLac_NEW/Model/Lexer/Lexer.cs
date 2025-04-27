@@ -11,7 +11,6 @@ public class Lexer
         @"(new|n[^e\w\s]?ew|ne[^w\w\s]?w|n[^e\w\s]?e[^w\w\s]?w)|" +
         @"\*|" +
         @"=|\(|\)|;|" +
-        @"[a-zA-Z][a-zA-Z0-9]*([^a-zA-Z0-9\s][a-zA-Z0-9]*)*|" +
         @"[a-zA-Z][a-zA-Z0-9]*|" +
         @"\s+|" +
         @"[^\s]";
@@ -186,16 +185,6 @@ public class Lexer
                         value
                     ));
                 }
-                else if (Regex.IsMatch(value, @"^[a-zA-Z][a-zA-Z0-9]*([^a-zA-Z0-9\s][a-zA-Z0-9]*)+$"))
-                {
-                    tokens.Add(new Token(
-                        lineNum + 1,
-                        start,
-                        pos,
-                        $"Сломанный идентификатор: '{value}'",
-                        value
-                    ));
-                }
                 else
                 {
                     tokens.Add(new Token(
@@ -209,6 +198,45 @@ public class Lexer
             }
         }
 
-        return tokens;
+        return MergeBrokenIdentifiers(tokens);
+    }
+
+    private List<Token> MergeBrokenIdentifiers(List<Token> tokens)
+    {
+        List<Token> mergedTokens = new();
+        int i = 0;
+
+        while (i < tokens.Count)
+        {
+            if (tokens[i].TypeCode == TokenType.Identifier)
+            {
+                int startIndex = i;
+                int endIndex = i;
+
+                while (endIndex + 1 < tokens.Count && tokens[endIndex + 1].TypeCode == TokenType.Invalid && endIndex + 2 < tokens.Count && tokens[endIndex + 2].TypeCode == TokenType.Identifier)
+                {
+                    endIndex += 2;
+                }
+
+                if (endIndex > startIndex)
+                {
+                    Token mergedToken = Token.MergeTokens(tokens, startIndex, endIndex);
+                    mergedTokens.Add(mergedToken);
+                    i = endIndex + 1;
+                }
+                else
+                {
+                    mergedTokens.Add(tokens[i]);
+                    i++;
+                }
+            }
+            else
+            {
+                mergedTokens.Add(tokens[i]);
+                i++;
+            }
+        }
+
+        return mergedTokens;
     }
 }
