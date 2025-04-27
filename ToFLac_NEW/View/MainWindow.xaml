@@ -22,38 +22,38 @@
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
-            <MenuItem Header="Файл" Padding="5 2 5 0">
-                <MenuItem Header="Создать" Click="ButtonCreate_OnClick"/>
-                <MenuItem Header="Открыть" Click="ButtonOpen_OnClick"/>
-                <MenuItem Header="Сохранить" Click="ButtonSave_OnClick"/>
-                <MenuItem Header="Сохранить как" Click="ButtonSaveAs_OnClick"/>
-                <MenuItem Header="Выход" Click="ButtonExit_OnClick"/>
+            <MenuItem FontSize="16" Header="Файл" Padding="5 2 5 0">
+                <MenuItem FontSize="16" Header="Создать" Click="ButtonCreate_OnClick"/>
+                <MenuItem FontSize="16" Header="Открыть" Click="ButtonOpen_OnClick"/>
+                <MenuItem FontSize="16" Header="Сохранить" Click="ButtonSave_OnClick"/>
+                <MenuItem FontSize="16" Header="Сохранить как" Click="ButtonSaveAs_OnClick"/>
+                <MenuItem FontSize="16" Header="Выход" Click="ButtonExit_OnClick"/>
             </MenuItem>
-            <MenuItem Header="Правка" Padding="5 2 5 0">
-                <MenuItem Header="Отменить" Click="ButtonUndo_OnClick"/>
-                <MenuItem Header="Повторить" Click="ButtonRedo_OnClick"/>
-                <MenuItem Header="Вырезать" Click="ButtonCut_OnClick"/>
-                <MenuItem Header="Копировать" Click="ButtonCopy_OnClick"/>
-                <MenuItem Header="Вставить" Click="ButtonPaste_OnClick"/>
-                <MenuItem Header="Удалить" Click="ButtonDelete_OnClick"/>
-                <MenuItem Header="Выделить всё" Click="ButtonSelectAll_OnClick"/>
+            <MenuItem FontSize="16" Header="Правка" Padding="5 2 5 0">
+                <MenuItem FontSize="16" Header="Отменить" Click="ButtonUndo_OnClick"/>
+                <MenuItem FontSize="16" Header="Повторить" Click="ButtonRedo_OnClick"/>
+                <MenuItem FontSize="16" Header="Вырезать" Click="ButtonCut_OnClick"/>
+                <MenuItem FontSize="16" Header="Копировать" Click="ButtonCopy_OnClick"/>
+                <MenuItem FontSize="16" Header="Вставить" Click="ButtonPaste_OnClick"/>
+                <MenuItem FontSize="16" Header="Удалить" Click="ButtonDelete_OnClick"/>
+                <MenuItem FontSize="16" Header="Выделить всё" Click="ButtonSelectAll_OnClick"/>
             </MenuItem>
-            <MenuItem Header="Текст" Padding="5 2 5 0">
-                <MenuItem Header="Постановка задачи" Click="Task_OnClick"/>
-                <MenuItem Header="Грамматика" Click="Grammar_OnClick"/>
-                <MenuItem Header="Классификация грамматики" Click="Homsk_OnClick"/>
-                <MenuItem Header="Метод анализа" Click="Analysis_OnClick"/>
-                <MenuItem Header="Диагностика и нейтрализация ошибок" Click="Diagnosis_OnClick"/>
-                <MenuItem Header="Тестовый пример" Click="Test_OnClick"/>
-                <MenuItem Header="Список литературы" Click="Literature_OnClick"/>
-                <MenuItem Header="Исходный код программы" Click="Code_OnClick"/>
+            <MenuItem FontSize="16" Header="Текст" Padding="5 2 5 0">
+                <MenuItem FontSize="16" Header="Постановка задачи" Click="Task_OnClick"/>
+                <MenuItem FontSize="16" Header="Грамматика" Click="Grammar_OnClick"/>
+                <MenuItem FontSize="16" Header="Классификация грамматики" Click="Homsk_OnClick"/>
+                <MenuItem FontSize="16" Header="Метод анализа" Click="Analysis_OnClick"/>
+                <MenuItem FontSize="16" Header="Диагностика и нейтрализация ошибок" Click="Diagnosis_OnClick"/>
+                <MenuItem FontSize="16" Header="Тестовый пример" Click="Test_OnClick"/>
+                <MenuItem FontSize="16" Header="Список литературы" Click="Literature_OnClick"/>
+                <MenuItem FontSize="16" Header="Исходный код программы" Click="Code_OnClick"/>
             </MenuItem>
             <Button Width="15" Height="15" Margin="2 0 2 0" Background="Transparent" BorderThickness="0" Style="{StaticResource NoBorderButton}">
                 <Image Source="../Resources/Images/playButton.png"/>
             </Button>
-            <MenuItem Header="Справка" Padding="5 2 5 0">
-                <MenuItem Header="Вызов справки" Click="ButtonHelp_OnClick"/>
-                <MenuItem Header="О программе" Click="ButtonAboutProgram_OnClick"/>
+            <MenuItem FontSize="16" Header="Справка" Padding="5 2 5 0">
+                <MenuItem FontSize="16" Header="Вызов справки" Click="ButtonHelp_OnClick"/>
+                <MenuItem FontSize="16" Header="О программе" Click="ButtonAboutProgram_OnClick"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1" Margin="20 0 20 0">
@@ -129,10 +129,11 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Hidden" x:Name="textBlockScrollViewer" ScrollChanged="TextBlockScrollViewer_ScrollChanged" >
-                    <TextBlock Text="{Binding IndexesNumbers, UpdateSourceTrigger=PropertyChanged}" Background="#eaeaea" Padding="5px 0px 0px 0px" />
+                    <TextBlock FontSize="16" Text="{Binding IndexesNumbers, UpdateSourceTrigger=PropertyChanged}" Background="#eaeaea" Padding="5px 0px 0px 0px" />
                 </ScrollViewer>
                 <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" x:Name="textBoxScrollViewer" ScrollChanged="TextBoxScrollViewer_ScrollChanged">
-                    <TextBox 
+                    <TextBox
+                        FontSize="16"
                         x:Name="codeBox"
                         AcceptsReturn="True"
                         Text="{Binding Code,
@@ -143,7 +144,7 @@
         </Border>
         <Border Grid.Row="3" Margin="20 0 20 20" BorderBrush="Gray" BorderThickness="0.75">
             <TabControl>
-                <TabItem Header="Парсер">
+                <TabItem FontSize="16" Header="Парсер">
                     <ScrollViewer>
                         <DataGrid
                             Name="DataGridErrors"
@@ -156,14 +157,14 @@
                             IsReadOnly="True"
                         >
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Cтрока" Binding="{Binding Path=Line}" Width="50"/>
-                                <DataGridTextColumn Header="Индекс" Binding="{Binding Path=Index}" Width="50"/>
-                                <DataGridTextColumn Header="Сообщение" Binding="{Binding Path=Message}" Width="250"/>
+                                <DataGridTextColumn FontSize="16" Header="Cтрока" Binding="{Binding Path=Line}" Width="70"/>
+                                <DataGridTextColumn FontSize="16" Header="Индекс" Binding="{Binding Path=Index}" Width="70"/>
+                                <DataGridTextColumn FontSize="16" Header="Сообщение" Binding="{Binding Path=Message}" Width="1*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="Лексер">
+                <TabItem FontSize="16" Header="Лексер">
                     <ScrollViewer>
                         <DataGrid
                             Name="DataGridAnalyzer"
@@ -176,12 +177,12 @@
                             IsReadOnly="True"
                         >
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Строка" Binding="{Binding Path=Line}" Width="50"/>
-                                <DataGridTextColumn Header="Начало" Binding="{Binding Path=StartIdx}" Width="50"/>
-                                <DataGridTextColumn Header="Конец" Binding="{Binding Path=EndIdx}" Width="50"/>
-                                <DataGridTextColumn Header="Терминал" Binding="{Binding Path=Terminal}" Width="150"/>
-                                <DataGridTextColumn Header="Нетерминал" Binding="{Binding Path=NonTerminal}" Width="150"/>
-                                <DataGridTextColumn Header="Сообщение" Binding="{Binding Path=Message}" Width="250"/>
+                                <DataGridTextColumn FontSize="16" Header="Строка" Binding="{Binding Path=Line}" Width="70"/>
+                                <DataGridTextColumn FontSize="16" Header="Начало" Binding="{Binding Path=StartIdx}" Width="70"/>
+                                <DataGridTextColumn FontSize="16" Header="Конец" Binding="{Binding Path=EndIdx}" Width="70"/>
+                                <DataGridTextColumn FontSize="16" Header="Терминал" Binding="{Binding Path=Terminal}" Width="120"/>
+                                <DataGridTextColumn FontSize="16" Header="Нетерминал" Binding="{Binding Path=NonTerminal}" Width="120"/>
+                                <DataGridTextColumn FontSize="16" Header="Сообщение" Binding="{Binding Path=Message}" Width="1*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </ScrollViewer>

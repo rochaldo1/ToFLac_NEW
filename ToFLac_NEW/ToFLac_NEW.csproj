@@ -29,16 +29,38 @@
     <None Remove="Resources\Images\paste.png" />
     <None Remove="Resources\Images\playButton.png" />
     <None Remove="Resources\Images\saveFile.png" />
+    <None Remove="View\Analysis.files\colorschememapping.xml" />
+    <None Remove="View\Analysis.files\filelist.xml" />
     <None Remove="View\Analysis.files\image001.png" />
     <None Remove="View\Analysis.files\image002.png" />
     <None Remove="View\Analysis.htm" />
+    <None Remove="View\Code.files\colorschememapping.xml" />
+    <None Remove="View\Code.files\filelist.xml" />
+    <None Remove="View\Code.files\themedata.thmx" />
     <None Remove="View\Code.htm" />
+    <None Remove="View\Diagnosis.files\colorschememapping.xml" />
+    <None Remove="View\Diagnosis.files\filelist.xml" />
+    <None Remove="View\Diagnosis.files\themedata.thmx" />
     <None Remove="View\Diagnosis.htm" />
+    <None Remove="View\Grammar.files\colorschememapping.xml" />
+    <None Remove="View\Grammar.files\filelist.xml" />
+    <None Remove="View\Grammar.files\themedata.thmx" />
     <None Remove="View\Grammar.htm" />
     <None Remove="View\Help.html" />
+    <None Remove="View\Homsk.files\colorschememapping.xml" />
+    <None Remove="View\Homsk.files\filelist.xml" />
+    <None Remove="View\Homsk.files\themedata.thmx" />
     <None Remove="View\Homsk.htm" />
+    <None Remove="View\Literature.files\colorschememapping.xml" />
+    <None Remove="View\Literature.files\filelist.xml" />
+    <None Remove="View\Literature.files\themedata.thmx" />
     <None Remove="View\Literature.htm" />
+    <None Remove="View\Task.files\colorschememapping.xml" />
+    <None Remove="View\Task.files\filelist.xml" />
+    <None Remove="View\Task.files\themedata.thmx" />
     <None Remove="View\Task.htm" />
+    <None Remove="View\Test.files\colorschememapping.xml" />
+    <None Remove="View\Test.files\filelist.xml" />
     <None Remove="View\Test.files\image001.png" />
     <None Remove="View\Test.files\image002.png" />
     <None Remove="View\Test.files\image003.png" />
@@ -51,6 +73,7 @@
     <None Remove="View\Test.files\image010.png" />
     <None Remove="View\Test.files\image011.png" />
     <None Remove="View\Test.files\image012.png" />
+    <None Remove="View\Test.files\themedata.thmx" />
     <None Remove="View\Test.htm" />
   </ItemGroup>
 
@@ -88,13 +111,46 @@
     <Resource Include="Resources\Images\HelpHtml\img7.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="View\Analysis.files\colorschememapping.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Analysis.files\filelist.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="View\Analysis.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Code.files\colorschememapping.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Code.files\filelist.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Code.files\themedata.thmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="View\Code.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="View\Diagnosis.files\colorschememapping.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Diagnosis.files\filelist.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Diagnosis.files\themedata.thmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="View\Diagnosis.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Grammar.files\colorschememapping.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Grammar.files\filelist.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Grammar.files\themedata.thmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="View\Grammar.htm">
@@ -103,13 +159,46 @@
     <Resource Include="View\Help.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="View\Homsk.files\colorschememapping.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Homsk.files\filelist.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Homsk.files\themedata.thmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="View\Homsk.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Literature.files\colorschememapping.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Literature.files\filelist.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Literature.files\themedata.thmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="View\Literature.htm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="View\Task.files\colorschememapping.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Task.files\filelist.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Task.files\themedata.thmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="View\Task.htm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Test.files\colorschememapping.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Test.files\filelist.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="View\Test.files\image001.png">
@@ -194,6 +283,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="View\Test.files\image012.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="View\Test.files\themedata.thmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="View\Test.htm">

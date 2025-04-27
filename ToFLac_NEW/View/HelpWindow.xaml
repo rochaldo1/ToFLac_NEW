@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ToFLac_NEW.View"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
+        Icon="../Resources/Images/logo.png"
         WindowStartupLocation="CenterScreen"
         Title="HelpWindow" Height="450" Width="800"
         MinHeight="450" MinWidth="800">

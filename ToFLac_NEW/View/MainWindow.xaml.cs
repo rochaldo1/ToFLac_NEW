@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using ToFLac_NEW.View;
@@ -16,6 +17,8 @@ namespace ToFLac_NEW
         private SaveFileDialog _saveFileDialog;
         private OpenFileDialog _openFileDialog;
         private string _fileName = string.Empty;
+
+        private string _exeDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         public MainWindow()
         {
@@ -193,10 +196,7 @@ namespace ToFLac_NEW
 
         private void ButtonHelp_OnClick(object sender, RoutedEventArgs e)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-
-            string fullPath = Path.Combine(projectDirectory, "View", "Help.html");
-
+            string fullPath = Path.Combine(_exeDirectory, "View", "Help.html");
 
             if (File.Exists(fullPath))
             {
@@ -233,9 +233,7 @@ namespace ToFLac_NEW
 
         private void Task_OnClick(object sender, RoutedEventArgs e)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-
-            string fullPath = Path.Combine(projectDirectory, "View", "Task.htm");
+            string fullPath = Path.Combine(_exeDirectory, "View", "Task.htm");
 
             if (File.Exists(fullPath))
             {
@@ -250,10 +248,7 @@ namespace ToFLac_NEW
 
         private void Grammar_OnClick(object sender, RoutedEventArgs e)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-
-            string fullPath = Path.Combine(projectDirectory, "View", "Grammar.htm");
-
+            string fullPath = Path.Combine(_exeDirectory, "View", "Grammar.htm");
 
             if (File.Exists(fullPath))
             {
@@ -268,10 +263,7 @@ namespace ToFLac_NEW
 
         private void Homsk_OnClick(object sender, RoutedEventArgs e)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-
-            string fullPath = Path.Combine(projectDirectory, "View", "Homsk.htm");
-
+            string fullPath = Path.Combine(_exeDirectory, "View", "Homsk.htm");
 
             if (File.Exists(fullPath))
             {
@@ -286,10 +278,7 @@ namespace ToFLac_NEW
 
         private void Analysis_OnClick(object sender, RoutedEventArgs e)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-
-            string fullPath = Path.Combine(projectDirectory, "View", "Analysis.htm");
-
+            string fullPath = Path.Combine(_exeDirectory, "View", "Analysis.htm");
 
             if (File.Exists(fullPath))
             {
@@ -304,10 +293,7 @@ namespace ToFLac_NEW
 
         private void Diagnosis_OnClick(object sender, RoutedEventArgs e)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-
-            string fullPath = Path.Combine(projectDirectory, "View", "Diagnosis.htm");
-
+            string fullPath = Path.Combine(_exeDirectory, "View", "Diagnosis.htm");
 
             if (File.Exists(fullPath))
             {
@@ -322,10 +308,7 @@ namespace ToFLac_NEW
 
         private void Test_OnClick(object sender, RoutedEventArgs e)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-
-            string fullPath = Path.Combine(projectDirectory, "View", "Test.htm");
-
+            string fullPath = Path.Combine(_exeDirectory, "View", "Test.htm");
 
             if (File.Exists(fullPath))
             {
@@ -340,10 +323,7 @@ namespace ToFLac_NEW
 
         private void Literature_OnClick(object sender, RoutedEventArgs e)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-
-            string fullPath = Path.Combine(projectDirectory, "View", "Literature.htm");
-
+            string fullPath = Path.Combine(_exeDirectory, "View", "Literature.htm");
 
             if (File.Exists(fullPath))
             {
@@ -358,10 +338,7 @@ namespace ToFLac_NEW
 
         private void Code_OnClick(object sender, RoutedEventArgs e)
         {
-            string projectDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-
-            string fullPath = Path.Combine(projectDirectory, "View", "Code.htm");
-
+            string fullPath = Path.Combine(_exeDirectory, "View", "Code.htm");
 
             if (File.Exists(fullPath))
             {
