@@ -11,10 +11,10 @@ public class Lexer
         @"(new|n[^e\w\s]?ew|ne[^w\w\s]?w|n[^e\w\s]?e[^w\w\s]?w)|" +
         @"\*|" +
         @"=|\(|\)|;|" +
-        @"[a-zA-Z][a-zA-Z0-9]*([^a-zA-Z0-9\s][a-zA-Z0-9]*)+|" + // Исправленный паттерн для сломанных идентификаторов
-        @"[a-zA-Z][a-zA-Z0-9]*|" + // Корректные идентификаторы
-        @"\s+|" + // Пробелы
-        @"[^\s]"; // Все остальные символы
+        @"[a-zA-Z][a-zA-Z0-9]*([^a-zA-Z0-9\s][a-zA-Z0-9]*)*|" +
+        @"[a-zA-Z][a-zA-Z0-9]*|" +
+        @"\s+|" +
+        @"[^\s]";
 
     public List<Token> GetLexemes(string text)
     {
@@ -46,7 +46,6 @@ public class Lexer
                 int start = pos;
                 pos += value.Length;
 
-                // Проверяем корректные токены
                 if (Regex.IsMatch(value, @"^int$|^float$|^double$|^char$"))
                 {
                     tokens.Add(new Token(
@@ -137,7 +136,6 @@ public class Lexer
                         value
                     ));
                 }
-                // Проверяем "сломанные" токены
                 else if (Regex.IsMatch(value, @"^i[^n\w\s]?nt$|^in[^t\w\s]?t$|^i[^n\w\s]?n[^t\w\s]?t$"))
                 {
                     tokens.Add(new Token(
