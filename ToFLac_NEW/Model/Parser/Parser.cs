@@ -188,8 +188,6 @@ namespace ToFLac_NEW.Model.Parser
             if (currentPosition >= _tokens.Count)
                 return errors;
 
-            currentPosition = SkipInvalidTokens(currentPosition, errors);
-
             if (_tokens[currentPosition].TypeCode != TokenType.Space)
             {
                 return GetMinErrors(
