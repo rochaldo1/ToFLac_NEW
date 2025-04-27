@@ -213,9 +213,13 @@ public class Lexer
                 int startIndex = i;
                 int endIndex = i;
 
-                while (endIndex + 1 < tokens.Count && tokens[endIndex + 1].TypeCode == TokenType.Invalid && endIndex + 2 < tokens.Count && tokens[endIndex + 2].TypeCode == TokenType.Identifier)
+                while (endIndex + 1 < tokens.Count && tokens[endIndex + 1].TypeCode == TokenType.Invalid)
                 {
-                    endIndex += 2;
+                    endIndex++;
+                    if (endIndex + 1 < tokens.Count && tokens[endIndex + 1].TypeCode == TokenType.Identifier)
+                    {
+                        endIndex++;
+                    }
                 }
 
                 if (endIndex > startIndex)
