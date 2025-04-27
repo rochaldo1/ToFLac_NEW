@@ -14,6 +14,12 @@
         LeftBracket = 10,
         RightBracket = 11,
         Semicolon = 12,
-        Invalid = 13
+        BrokenInt = 13,
+        BrokenFloat = 14,
+        BrokenDouble = 15,
+        BrokenChar = 16,
+        BrokenNew = 17,
+        BrokenIdentifier = 18,
+        Invalid = 19
     }
 }
