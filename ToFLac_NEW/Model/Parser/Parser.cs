@@ -343,7 +343,7 @@ namespace ToFLac_NEW.Model.Parser
                 errors.Add(new ErrorToken(
                     _tokens[currentPosition].Line,
                     currentPosition,
-                    $"Удалить недопустимый символ: {_tokens[currentPosition].Terminal}",
+                    $"Удалить недопустимый символ: '{_tokens[currentPosition].Terminal}'",
                     ErrorType.DELETE
                 ));
 
