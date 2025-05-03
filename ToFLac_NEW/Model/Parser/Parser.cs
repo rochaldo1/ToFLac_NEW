@@ -92,6 +92,19 @@ namespace ToFLac_NEW.Model.Parser
 
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParsePointer(currentPosition + 1, errors);
+
+            if (_tokens[currentPosition].TypeCode == TokenType.BrokenIdentifier ||
+                _tokens[currentPosition].TypeCode == TokenType.Identifier)
+            {
+                errors.Add(new ErrorToken(
+                    _tokens[currentPosition].Line,
+                    currentPosition,
+                    "Вставить лексему: '*'",
+                    ErrorType.PUSH)
+                );
+
+                return ParseIdentifier(currentPosition, errors);
+            }
             
             if (_tokens[currentPosition].TypeCode != TokenType.Pointer)
             {
@@ -142,6 +155,19 @@ namespace ToFLac_NEW.Model.Parser
 
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseEqual(currentPosition + 1, errors);
+
+            if (_tokens[currentPosition].TypeCode == TokenType.BrokenNew ||
+                _tokens[currentPosition].TypeCode == TokenType.New)
+            {
+                errors.Add(new ErrorToken(
+                    _tokens[currentPosition].Line,
+                    currentPosition,
+                    "Вставить лексему: '='",
+                    ErrorType.PUSH)
+                );
+
+                return ParseNew(currentPosition, errors);
+            }
 
             if (_tokens[currentPosition].TypeCode != TokenType.Equal)
             {
@@ -243,6 +269,25 @@ namespace ToFLac_NEW.Model.Parser
 
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseLeftBracket(currentPosition + 1, errors);
+
+            if (_tokens[currentPosition].TypeCode == TokenType.Semicolon)
+            {
+                errors.Add(new ErrorToken(
+                    _tokens[currentPosition].Line,
+                    currentPosition,
+                    "Вставить лексему: '('",
+                    ErrorType.PUSH)
+                );
+
+                errors.Add(new ErrorToken(
+                    _tokens[currentPosition].Line,
+                    currentPosition,
+                    "Вставить лексему: ')'",
+                    ErrorType.PUSH)
+                );
+
+                return ParseSemicolon(currentPosition, errors);
+            }
 
             if (currentPosition + 1 < _tokens.Count &&
                 _tokens[currentPosition].TypeCode == TokenType.LeftBracket &&
