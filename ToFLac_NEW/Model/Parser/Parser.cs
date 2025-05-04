@@ -251,18 +251,6 @@ namespace ToFLac_NEW.Model.Parser
                 currentType == TokenType.Char)
                 return ParseLeftBracket(currentPosition + 1, errors);
 
-            if (_tokens[currentPosition].TypeCode == TokenType.Invalid)
-            {
-                errors.Add(new ErrorToken(
-                    _tokens[currentPosition].Line,
-                    currentPosition,
-                    "Заменить лексему '" + _tokens[currentPosition].Terminal +
-                    "' на лексему 'int', 'float', 'double' или 'char'",
-                    ErrorType.REPLACE
-                ));
-                return ParseLeftBracket(currentPosition + 1, errors);
-            }
-
             return GetMinErrors(
                 ParseLeftBracket(currentPosition, CreateErrorListWithType(currentPosition, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
                 ParseLeftBracket(currentPosition + 1, CreateErrorListWithType(currentPosition, ErrorType.REPLACE, errors, _tokens[currentPosition].Line)),
