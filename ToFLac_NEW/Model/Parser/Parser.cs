@@ -12,9 +12,9 @@ namespace ToFLac_NEW.Model.Parser
         {
             _errors.Clear();
             _tokens.Clear();
-
+            
             GroupTokensByLine(inputTokens);
-
+            
             foreach (var lineTokens in _tokens)
             {
                 var lineParser = new LineTokenRecursiveParser(lineTokens);
@@ -49,7 +49,7 @@ namespace ToFLac_NEW.Model.Parser
             return ParseStart(currentPosition, errors);
         }
 
-        private List<ErrorToken> ParseStart(int currentPosition, List<ErrorToken> errors)
+        private List<ErrorToken> ParseStart(int currentPosition,  List<ErrorToken> errors)
         {
             if (currentPosition >= _tokens.Count)
                 return errors;
@@ -105,7 +105,7 @@ namespace ToFLac_NEW.Model.Parser
 
                 return ParseIdentifier(currentPosition, errors);
             }
-
+            
             if (_tokens[currentPosition].TypeCode != TokenType.Pointer)
             {
                 return GetMinErrors(
@@ -142,7 +142,7 @@ namespace ToFLac_NEW.Model.Parser
                     ParseIdentifier(currentPosition + 1, CreateErrorList(currentPosition, TokenType.Identifier, ErrorType.DELETE, errors, _tokens[currentPosition].Line))
                 );
             }
-
+            
             return ParseEqual(currentPosition + 1, errors);
         }
 
@@ -231,6 +231,8 @@ namespace ToFLac_NEW.Model.Parser
             if (currentPosition >= _tokens.Count)
                 return errors;
 
+            currentPosition = SkipInvalidTokens(currentPosition, errors);
+
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseType(currentPosition + 1, errors);
 
@@ -251,48 +253,6 @@ namespace ToFLac_NEW.Model.Parser
                 currentType == TokenType.Char)
                 return ParseLeftBracket(currentPosition + 1, errors);
 
-            if (currentType == TokenType.Invalid)
-            {
-                errors.Add(new ErrorToken(
-                    _tokens[currentPosition].Line,
-                    currentPosition,
-                    $"Удалить недопустимый символ '{_tokens[currentPosition].Terminal}'",
-                    ErrorType.DELETE
-                ));
-
-                int nextPosition = currentPosition + 1;
-                while (nextPosition < _tokens.Count && _tokens[nextPosition].TypeCode == TokenType.Invalid)
-                {
-                    errors.Add(new ErrorToken(
-                        _tokens[nextPosition].Line,
-                        nextPosition,
-                        $"Удалить недопустимый символ '{_tokens[nextPosition].Terminal}'",
-                        ErrorType.DELETE
-                    ));
-                    nextPosition++;
-                }
-
-                while (nextPosition < _tokens.Count && _tokens[nextPosition].TypeCode == TokenType.Space)
-                {
-                    nextPosition++;
-                }
-
-                if (nextPosition < _tokens.Count)
-                {
-                    var nextType = _tokens[nextPosition].TypeCode;
-
-                    if (nextType == TokenType.Int || nextType == TokenType.Float ||
-                        nextType == TokenType.Double || nextType == TokenType.Char ||
-                        nextType == TokenType.BrokenInt || nextType == TokenType.BrokenFloat ||
-                        nextType == TokenType.BrokenDouble || nextType == TokenType.BrokenChar)
-                    {
-                        return ParseType(nextPosition, errors);
-                    }
-                }
-
-                return ParseLeftBracket(nextPosition, errors);
-            }
-
             return GetMinErrors(
                 ParseLeftBracket(currentPosition, CreateErrorListWithType(currentPosition, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
                 ParseLeftBracket(currentPosition + 1, CreateErrorListWithType(currentPosition, ErrorType.REPLACE, errors, _tokens[currentPosition].Line)),
@@ -305,20 +265,42 @@ namespace ToFLac_NEW.Model.Parser
             if (currentPosition >= _tokens.Count)
                 return errors;
 
+            currentPosition = SkipInvalidTokens(currentPosition, errors);
+
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseLeftBracket(currentPosition + 1, errors);
 
-            if (_tokens[currentPosition].TypeCode == TokenType.RightBracket ||
-                _tokens[currentPosition].TypeCode == TokenType.Semicolon)
+            if (_tokens[currentPosition].TypeCode == TokenType.Semicolon)
             {
                 errors.Add(new ErrorToken(
                     _tokens[currentPosition].Line,
                     currentPosition,
                     "Вставить лексему: '('",
-                    ErrorType.PUSH
-                ));
+                    ErrorType.PUSH)
+                );
 
-                return ParseRightBracket(currentPosition, errors);
+                errors.Add(new ErrorToken(
+                    _tokens[currentPosition].Line,
+                    currentPosition,
+                    "Вставить лексему: ')'",
+                    ErrorType.PUSH)
+                );
+
+                return ParseSemicolon(currentPosition, errors);
+            }
+
+            if (currentPosition + 1 < _tokens.Count &&
+                _tokens[currentPosition].TypeCode == TokenType.LeftBracket &&
+                _tokens[currentPosition + 1].TypeCode == TokenType.Semicolon)
+            {
+                errors.Add(new ErrorToken(
+                    _tokens[currentPosition].Line,
+                    currentPosition,
+                    "Вставить лексему: ')'",
+                    ErrorType.PUSH)
+                );
+
+                return ParseSemicolon(currentPosition + 1, errors);
             }
 
             if (_tokens[currentPosition].TypeCode != TokenType.LeftBracket)
@@ -338,6 +320,8 @@ namespace ToFLac_NEW.Model.Parser
             if (currentPosition >= _tokens.Count)
                 return errors;
 
+            currentPosition = SkipInvalidTokens(currentPosition, errors);
+
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseRightBracket(currentPosition + 1, errors);
 
@@ -352,7 +336,7 @@ namespace ToFLac_NEW.Model.Parser
                 return ParseSemicolon(currentPosition, errors);
             }
 
-            if (_tokens[currentPosition].TypeCode != TokenType.RightBracket)
+                if (_tokens[currentPosition].TypeCode != TokenType.RightBracket)
             {
                 return GetMinErrors(
                     ParseSemicolon(currentPosition, CreateErrorList(currentPosition, TokenType.RightBracket, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
@@ -399,29 +383,17 @@ namespace ToFLac_NEW.Model.Parser
         {
             while (currentPosition < _tokens.Count && _tokens[currentPosition].TypeCode == TokenType.Invalid)
             {
-                char invalidChar = _tokens[currentPosition].Terminal[0];
-                if (!IsPotentialPartOfOtherToken(invalidChar))
-                {
-                    errors.Add(new ErrorToken(
-                        _tokens[currentPosition].Line,
-                        currentPosition,
-                        $"Удалить недопустимый символ: '{_tokens[currentPosition].Terminal}'",
-                        ErrorType.DELETE
-                    ));
-                    currentPosition++;
-                }
-                else
-                {
-                    break;
-                }
+                errors.Add(new ErrorToken(
+                    _tokens[currentPosition].Line,
+                    currentPosition,
+                    $"Удалить недопустимый символ: '{_tokens[currentPosition].Terminal}'",
+                    ErrorType.DELETE
+                ));
+
+                currentPosition++;
             }
 
             return currentPosition;
-        }
-
-        private bool IsPotentialPartOfOtherToken(char c)
-        {
-            return char.IsLetterOrDigit(c) || c == '*' || c == '=' || c == '(' || c == ')' || c == ';';
         }
 
         private static List<ErrorToken> GetMinErrors(List<ErrorToken> push, List<ErrorToken> replace, List<ErrorToken> delete)
