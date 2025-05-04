@@ -251,16 +251,46 @@ namespace ToFLac_NEW.Model.Parser
                 currentType == TokenType.Char)
                 return ParseLeftBracket(currentPosition + 1, errors);
 
-            if (_tokens[currentPosition].TypeCode == TokenType.Invalid)
+            if (currentType == TokenType.Invalid)
             {
                 errors.Add(new ErrorToken(
                     _tokens[currentPosition].Line,
                     currentPosition,
-                    "Заменить лексему '" + _tokens[currentPosition].Terminal +
-                    "' на лексему 'int', 'float', 'double' или 'char'",
-                    ErrorType.REPLACE
+                    $"Удалить недопустимый символ '{_tokens[currentPosition].Terminal}'",
+                    ErrorType.DELETE
                 ));
-                return ParseLeftBracket(currentPosition + 1, errors);
+
+                int nextPosition = currentPosition + 1;
+                while (nextPosition < _tokens.Count && _tokens[nextPosition].TypeCode == TokenType.Invalid)
+                {
+                    errors.Add(new ErrorToken(
+                        _tokens[nextPosition].Line,
+                        nextPosition,
+                        $"Удалить недопустимый символ '{_tokens[nextPosition].Terminal}'",
+                        ErrorType.DELETE
+                    ));
+                    nextPosition++;
+                }
+
+                while (nextPosition < _tokens.Count && _tokens[nextPosition].TypeCode == TokenType.Space)
+                {
+                    nextPosition++;
+                }
+
+                if (nextPosition < _tokens.Count)
+                {
+                    var nextType = _tokens[nextPosition].TypeCode;
+
+                    if (nextType == TokenType.Int || nextType == TokenType.Float ||
+                        nextType == TokenType.Double || nextType == TokenType.Char ||
+                        nextType == TokenType.BrokenInt || nextType == TokenType.BrokenFloat ||
+                        nextType == TokenType.BrokenDouble || nextType == TokenType.BrokenChar)
+                    {
+                        return ParseType(nextPosition, errors);
+                    }
+                }
+
+                return ParseLeftBracket(nextPosition, errors);
             }
 
             return GetMinErrors(
