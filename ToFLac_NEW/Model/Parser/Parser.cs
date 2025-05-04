@@ -54,11 +54,6 @@ namespace ToFLac_NEW.Model.Parser
             if (currentPosition >= _tokens.Count)
                 return errors;
 
-            currentPosition = SkipInvalidTokens(currentPosition, errors);
-
-            if (currentPosition >= _tokens.Count)
-                return errors;
-
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseStart(currentPosition + 1, errors);
 
@@ -88,11 +83,6 @@ namespace ToFLac_NEW.Model.Parser
 
         private List<ErrorToken> ParsePointer(int currentPosition, List<ErrorToken> errors)
         {
-            if (currentPosition >= _tokens.Count)
-                return errors;
-
-            currentPosition = SkipInvalidTokens(currentPosition, errors);
-
             if (currentPosition >= _tokens.Count)
                 return errors;
 
@@ -157,11 +147,6 @@ namespace ToFLac_NEW.Model.Parser
 
         private List<ErrorToken> ParseEqual(int currentPosition, List<ErrorToken> errors)
         {
-            if (currentPosition >= _tokens.Count)
-                return errors;
-
-            currentPosition = SkipInvalidTokens(currentPosition, errors);
-
             if (currentPosition >= _tokens.Count)
                 return errors;
 
