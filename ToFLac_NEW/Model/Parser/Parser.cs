@@ -186,8 +186,6 @@ namespace ToFLac_NEW.Model.Parser
             if (currentPosition >= _tokens.Count)
                 return errors;
 
-            currentPosition = SkipInvalidTokens(currentPosition, errors);
-
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseNew(currentPosition + 1, errors);
 
@@ -214,16 +212,30 @@ namespace ToFLac_NEW.Model.Parser
             if (currentPosition >= _tokens.Count)
                 return errors;
 
-            if (_tokens[currentPosition].TypeCode != TokenType.Space)
+            if (_tokens[currentPosition].TypeCode == TokenType.Space)
+                return ParseType(currentPosition + 1, errors);
+
+            var nextType = _tokens[currentPosition].TypeCode;
+            if (nextType == TokenType.Int || nextType == TokenType.Float ||
+                nextType == TokenType.Double || nextType == TokenType.Char ||
+                nextType == TokenType.BrokenInt || nextType == TokenType.BrokenFloat ||
+                nextType == TokenType.BrokenDouble || nextType == TokenType.BrokenChar)
             {
-                return GetMinErrors(
-                    ParseType(currentPosition, CreateErrorList(currentPosition, TokenType.Space, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
-                    ParseType(currentPosition + 1, CreateErrorList(currentPosition, TokenType.Space, ErrorType.REPLACE, errors, _tokens[currentPosition].Line)),
-                    ParseSpaceAfterNew(currentPosition + 1, CreateErrorList(currentPosition, TokenType.Space, ErrorType.DELETE, errors, _tokens[currentPosition].Line))
-                );
+                errors.Add(new ErrorToken(
+                    _tokens[currentPosition].Line,
+                    currentPosition,
+                    "Вставить лексему: ' '",
+                    ErrorType.PUSH
+                ));
+
+                return ParseType(currentPosition, errors);
             }
 
-            return ParseType(currentPosition + 1, errors);
+            return GetMinErrors(
+                ParseType(currentPosition, CreateErrorList(currentPosition, TokenType.Space, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
+                ParseType(currentPosition + 1, CreateErrorList(currentPosition, TokenType.Space, ErrorType.REPLACE, errors, _tokens[currentPosition].Line)),
+                ParseSpaceAfterNew(currentPosition + 1, CreateErrorList(currentPosition, TokenType.Space, ErrorType.DELETE, errors, _tokens[currentPosition].Line))
+            );
         }
 
         private List<ErrorToken> ParseType(int currentPosition, List<ErrorToken> errors)
