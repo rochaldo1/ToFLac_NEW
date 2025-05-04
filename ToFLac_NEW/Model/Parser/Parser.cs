@@ -153,6 +153,9 @@ namespace ToFLac_NEW.Model.Parser
 
             currentPosition = SkipInvalidTokens(currentPosition, errors);
 
+            if (currentPosition >= _tokens.Count)
+                return errors;
+
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseEqual(currentPosition + 1, errors);
 
@@ -342,7 +345,7 @@ namespace ToFLac_NEW.Model.Parser
             {
                 errors.Add(new ErrorToken(
                     _tokens.Last().Line,
-                    _tokens.Last().StartIdx,
+                    currentPosition,
                     CreateErrorMessage(TokenType.Semicolon, ErrorType.PUSH, currentPosition),
                     ErrorType.PUSH
                 ));
