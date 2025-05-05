@@ -199,7 +199,9 @@ namespace ToFLac_NEW.Model.Lexer
                 }
             }
 
-            return MergeBrokenIdentifiers(tokens);
+            tokens = MergeBrokenIdentifiers(tokens);
+            tokens = MergeTypeAndIdentifiers(tokens);
+            return tokens;
         }
 
         private List<Token> MergeBrokenIdentifiers(List<Token> tokens)
@@ -244,6 +246,108 @@ namespace ToFLac_NEW.Model.Lexer
             }
 
             return mergedTokens;
+        }
+
+        private List<Token> MergeTypeAndIdentifiers(List<Token> tokens)
+        {
+            List<Token> mergedTokens = new List<Token>();
+            int i = 0;
+
+            while (i < tokens.Count)
+            {
+                if (IsTypeToken(tokens[i].TypeCode))
+                {
+                    if (i + 1 < tokens.Count && tokens[i + 1].TypeCode == TokenType.Identifier)
+                    {
+                        if (!HasSpaceBetween(tokens, i, i + 1))
+                        {
+                            Token mergedToken = MergeTypeAndIdentifier(tokens[i], tokens[i + 1]);
+                            mergedTokens.Add(mergedToken);
+                            i += 2;
+
+                            if (i < tokens.Count && tokens[i].TypeCode == TokenType.Identifier &&
+                                !HasSpaceBetween(mergedTokens, mergedTokens.Count - 1, i))
+                            {
+                                Token prevMerged = mergedTokens[mergedTokens.Count - 1];
+                                Token newMerged = MergeTypeAndIdentifier(prevMerged, tokens[i]);
+                                mergedTokens[mergedTokens.Count - 1] = newMerged;
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            mergedTokens.Add(tokens[i]);
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        mergedTokens.Add(tokens[i]);
+                        i++;
+                    }
+                }
+                else
+                {
+                    mergedTokens.Add(tokens[i]);
+                    i++;
+                }
+            }
+
+            return mergedTokens;
+        }
+
+        private bool IsTypeToken(TokenType type)
+        {
+            return type == TokenType.Int || type == TokenType.Float || type == TokenType.Double || type == TokenType.Char ||
+                   type == TokenType.BrokenInt || type == TokenType.BrokenFloat || type == TokenType.BrokenDouble || type == TokenType.BrokenChar;
+        }
+
+        private bool HasSpaceBetween(List<Token> tokens, int firstIndex, int secondIndex)
+        {
+            if (secondIndex - firstIndex > 1)
+            {
+                for (int i = firstIndex + 1; i < secondIndex; i++)
+                {
+                    if (tokens[i].TypeCode == TokenType.Space)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private Token MergeTypeAndIdentifier(Token typeToken, Token identifierToken)
+        {
+            string mergedTerminal = typeToken.Terminal + identifierToken.Terminal;
+            int mergedStartIdx = typeToken.StartIdx;
+            int mergedEndIdx = identifierToken.EndIdx;
+            int mergedLine = typeToken.Line;
+
+            bool isBrokenType = typeToken.TypeCode == TokenType.BrokenInt ||
+                               typeToken.TypeCode == TokenType.BrokenFloat ||
+                               typeToken.TypeCode == TokenType.BrokenDouble ||
+                               typeToken.TypeCode == TokenType.BrokenChar;
+
+            bool hasInvalidChars = identifierToken.TypeCode == TokenType.BrokenIdentifier ||
+                                 identifierToken.TypeCode == TokenType.Invalid;
+
+            if (isBrokenType || hasInvalidChars)
+            {
+                return new Token(mergedLine, mergedStartIdx, mergedEndIdx, $"Сломанный идентификатор: '{mergedTerminal}'", mergedTerminal)
+                {
+                    NonTerminal = "BROKEN_IDENTIFIER",
+                    TypeCode = TokenType.BrokenIdentifier
+                };
+            }
+            else
+            {
+                return new Token(mergedLine, mergedStartIdx, mergedEndIdx, $"Идентификатор: '{mergedTerminal}'", mergedTerminal)
+                {
+                    NonTerminal = "IDENTIFIER",
+                    TypeCode = TokenType.Identifier
+                };
+            }
         }
     }
 }
