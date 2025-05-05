@@ -75,8 +75,8 @@ namespace ToFLac_NEW.Model.Parser
                 return ParsePointer(currentPosition + 1, errors);
 
             return GetMinErrors(
-                ParsePointer(currentPosition, CreateErrorListWithType(currentPosition, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
                 ParsePointer(currentPosition + 1, CreateErrorListWithType(currentPosition, ErrorType.REPLACE, errors, _tokens[currentPosition].Line)),
+                ParsePointer(currentPosition, CreateErrorListWithType(currentPosition, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
                 ParseStart(currentPosition + 1, CreateErrorListWithType(currentPosition, ErrorType.DELETE, errors, _tokens[currentPosition].Line))
             );
         }
@@ -216,7 +216,8 @@ namespace ToFLac_NEW.Model.Parser
             if (nextType == TokenType.Int || nextType == TokenType.Float ||
                 nextType == TokenType.Double || nextType == TokenType.Char ||
                 nextType == TokenType.BrokenInt || nextType == TokenType.BrokenFloat ||
-                nextType == TokenType.BrokenDouble || nextType == TokenType.BrokenChar)
+                nextType == TokenType.BrokenDouble || nextType == TokenType.BrokenChar ||
+                nextType == TokenType.Identifier || nextType == TokenType.BrokenIdentifier)
             {
                 errors.Add(new ErrorToken(
                     _tokens[currentPosition].Line,
@@ -261,8 +262,8 @@ namespace ToFLac_NEW.Model.Parser
                 return ParseLeftBracket(currentPosition + 1, errors);
 
             return GetMinErrors(
-                ParseLeftBracket(currentPosition, CreateErrorListWithType(currentPosition, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
                 ParseLeftBracket(currentPosition + 1, CreateErrorListWithType(currentPosition, ErrorType.REPLACE, errors, _tokens[currentPosition].Line)),
+                ParseLeftBracket(currentPosition, CreateErrorListWithType(currentPosition, ErrorType.PUSH, errors, _tokens[currentPosition].Line)),
                 ParseType(currentPosition + 1, CreateErrorListWithType(currentPosition, ErrorType.DELETE, errors, _tokens[currentPosition].Line))
             );
         }
