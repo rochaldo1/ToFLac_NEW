@@ -276,8 +276,7 @@ namespace ToFLac_NEW.Model.Parser
             if (_tokens[currentPosition].TypeCode == TokenType.Space)
                 return ParseLeftBracket(currentPosition + 1, errors);
 
-            if (_tokens[currentPosition].TypeCode == TokenType.RightBracket ||
-                _tokens[currentPosition].TypeCode == TokenType.Semicolon)
+            if (_tokens[currentPosition].TypeCode == TokenType.RightBracket)
             {
                 errors.Add(new ErrorToken(
                     _tokens[currentPosition].Line,
